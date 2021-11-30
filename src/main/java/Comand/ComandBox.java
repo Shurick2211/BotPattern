@@ -14,6 +14,8 @@ public class ComandBox {
     public ComandBox(SendMessService sendMessService) {
         comandMap= ImmutableMap.<String,Comand>builder()
                 .put(START.getComandName(), new StartComand(sendMessService))
+                .put(TEST.getComandName(), new TestComand(sendMessService))
+                .put(VICTORINA.getComandName(), new VictorinaComand(sendMessService))
                 .put(REG.getComandName(), new RegComand(sendMessService))
                 .put(HELP.getComandName(), new HelpComand(sendMessService))
                 .put(NO.getComandName(), new NoComand(sendMessService))

@@ -43,6 +43,7 @@ public class Bot extends TelegramLongPollingBot {
         int doReg;
 
     if(update.hasMessage()) {
+       //System.out.println( update.getMessage().getFrom().getFirstName()+": "+update.getMessage().getText());
 
         if (userBox.getUser(update.getMessage().getChatId().toString()) == null) doReg = 0;
         else doReg = userBox.getUser(update.getMessage().getChatId().toString()).doRegistration;

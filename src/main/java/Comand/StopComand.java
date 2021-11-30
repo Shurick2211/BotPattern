@@ -15,7 +15,7 @@ public class StopComand implements Comand{
     @Override
     public void execute(Message message) {
         sendMessService.send(message.getChatId().toString(),mess);
-       // UserBox.deleteUser(UserBox.getUser(message.getChatId().toString()), new DataBase());
+        userBox.deleteUser(userBox.getUser(message.getChatId().toString()), new DataBase());
         userBox.users.remove(userBox.getUser(message.getChatId().toString()));
 
 

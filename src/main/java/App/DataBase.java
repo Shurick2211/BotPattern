@@ -5,7 +5,6 @@ import org.postgresql.util.PSQLException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -40,24 +39,44 @@ public class DataBase implements UserList{
         else System.out.println("Connected is FAIL!");
         try {
             statement=connection.createStatement();
-            statement.execute(creatDb());
+            statement.execute(creatTablUser());
+          //  statement.execute(creatTablTest());
+           // statement.execute(creatTablVictorina());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return statement;
     }
 
-    private  String creatDb(){
+    private  String creatTablUser(){
         String create="CREATE TABLE IF NOT EXISTS public.users ("+
     "chatid integer NOT NULL,"+
-   // "valuta character varying(20), inf boolean,minimum real,"+
+    "firstName character varying(20),"+
     "CONSTRAINT users_pkey PRIMARY KEY (chatid))";
     return create;
     }
 
+    private  String creatTablTest(){
+        String create="CREATE TABLE IF NOT EXISTS public.test ("+
+                "numQw integer NOT NULL,"+
+                "question character varying(300),"+
+                "answer1 character varying(50),"+
+                "answer2 character varying(50),"+
+                "answer3 character varying(50),"+
+                "answer4 character varying(50),"+
+                "CONSTRAINT test_pkey PRIMARY KEY (numQw))";
+        return create;
+    }
 
-
-
+    private  String creatTablVictorina(){
+        String create="CREATE TABLE IF NOT EXISTS public.victorina ("+
+                "numQw integer NOT NULL,"+
+                "question character varying(300),"+
+                "answer character varying(100),"+
+                "CONSTRAINT victorina_pkey PRIMARY KEY (numQw))";
+        return create;
+    }
     @Override
     public Set<User> users() {
         Set<User> users=new HashSet<>();
@@ -66,7 +85,7 @@ public class DataBase implements UserList{
         try {
             resultSet=statementBD().executeQuery(sql);
             while (resultSet.next()){
-                User user=new User(resultSet.getInt("chatID")+"");
+                User user=new User(resultSet.getInt("chatID")+"",resultSet.getString("firstName"));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -81,19 +100,13 @@ public class DataBase implements UserList{
     public void saveUserList(Set<User> users) {
 
         for(User user:users){
-            sql="insert into users values ('"+Integer.parseInt(user.getChatId())+"')";
+            sql="insert into users values ('"+Integer.parseInt(user.getChatId())+
+                    "','"+user.getFirstName()+
+                    "')";
             try {
                 statementBD().execute(sql);
             } catch (PSQLException e) {
-                try {
-                    statementBD().execute("update users set "
-                    +"where chatid="
-                            +Integer.parseInt(user.getChatId()));
-
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-
+               System.out.println("Was registration!");
 
             } catch (SQLException es) {
                 es.printStackTrace();
@@ -139,13 +152,3 @@ public class DataBase implements UserList{
 
 
 }
-//CREATE TABLE IF NOT EXISTS public.users
-//(
-//    chatid integer NOT NULL,
-//    valuta character varying(20) COLLATE pg_catalog."default",
-//    inf boolean,
-//    minimum real,
-//    maximum real,
-//    stavka real,
-//    CONSTRAINT users_pkey PRIMARY KEY (chatid)
-//)

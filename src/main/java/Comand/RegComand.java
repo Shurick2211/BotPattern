@@ -17,9 +17,10 @@ public class RegComand implements Comand{
     @Override
     public void execute(Message message) {
         User user= userBox.getUser(message.getChatId().toString());
-        if (user==null)
-        userBox.users.add(new User(message.getChatId().toString()));
-       // user.toString();
+        if (user==null) {
+            userBox.users.add(new User(message.getChatId().toString(), message.getFrom().getFirstName()));
+            userBox.saveUsers(new DataBase());
+        }
     /*
 
         int doReg;

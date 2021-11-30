@@ -3,7 +3,8 @@ package Comand;
 import org.telegram.telegrambots.api.objects.Message;
 
 public class NoComand implements Comand{
-    private final SendMessService sendMessService;
+    private  SendMessService sendMessService ;
+
     private static String mess;
 
     public NoComand(SendMessService sendMessService) {
@@ -12,15 +13,25 @@ public class NoComand implements Comand{
 
     @Override
     public void execute(Message message) {
+        ComandBox comandBox = new ComandBox(sendMessService);
         switch (message.getText()) {
             case "Регистрация": {
-                ComandBox comandBox = new ComandBox(sendMessService);
+
                 comandBox.useComand("/reg").execute(message);
                 break;
             }
+            case "Тест": {
 
+                comandBox.useComand("/test").execute(message);
+                break;
+            }
+            case "Викторина": {
+
+                comandBox.useComand("/victorina").execute(message);
+                break;
+            }
             case "STOP": {
-                ComandBox comandBox = new ComandBox(sendMessService);
+
                 comandBox.useComand("/stop").execute(message);
                 break;
             }

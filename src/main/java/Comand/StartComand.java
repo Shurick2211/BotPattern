@@ -17,7 +17,14 @@ public class StartComand implements Comand{
 
     @Override
     public void execute(Message message) {
-        if(!userBox.getUser(message.getChatId().toString()).equals(null))
-            mess="Привет! Вы наш клиент!";
-        sendMessService.send(message.getChatId().toString(),mess); }
+        if(userBox.getUser(message.getChatId().toString())==null){
+            mess="Привет!";
+            ComandBox comandBox = new ComandBox(sendMessService);
+            comandBox.useComand("/reg").execute(message);
+        }
+
+        else mess="Привет! Вы наш клиент!";
+        sendMessService.send(message.getChatId().toString(),mess);
+
+    }
 }

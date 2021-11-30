@@ -17,7 +17,7 @@ public class BUTTON implements Comand{
         if (userBox.getUser(message.getChatId().toString())==null){
             mess="Регистрация";
         }else {
-            mess="Изменить/Изменить /STOP";
+            mess="Тест/Викторина/STOP";
 
         }
 
