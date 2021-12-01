@@ -45,8 +45,7 @@ public class Bot extends TelegramLongPollingBot {
     if(update.hasMessage()) {
        //System.out.println( update.getMessage().getFrom().getFirstName()+": "+update.getMessage().getText());
 
-        if (userBox.getUser(update.getMessage().getChatId().toString()) == null) doReg = 0;
-        else doReg = userBox.getUser(update.getMessage().getChatId().toString()).doRegistration;
+
 
         String message = update.getMessage().getText().trim();
 
@@ -56,11 +55,6 @@ public class Bot extends TelegramLongPollingBot {
             System.out.println(idinteficator);
             comandBox.useComand(idinteficator).execute(update.getMessage());
         } else
-
-            if (doReg > 0) {
-                comandBox.useComand("/reg").execute(update.getMessage());
-            } else
-
             {
                 comandBox.useComand("NO").execute(update.getMessage());
                 comandBox = new ComandBox(new SendMessButton());

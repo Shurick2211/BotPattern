@@ -38,11 +38,12 @@ public class NoComand implements Comand{
 
             default:
                 mess = "Ипользуй помощь /help";
+                sendMessService.send(message.getChatId().toString(),mess);
 
         }
 
 
-        sendMessService.send(message.getChatId().toString(),mess);
+
 
 
     }
